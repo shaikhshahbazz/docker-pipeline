@@ -2,17 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "shahbazz16/amazon-nginx"
+        DOCKER_IMAGE = "shahbazz16/docker-pipeline"
         DOCKER_TAG   = "latest"
     }
 
     stages {
-
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/shaikhshahbazz/docker-pipeline.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
@@ -25,7 +19,7 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
+                    credentialsId: 'dockerhub-credentials',
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
